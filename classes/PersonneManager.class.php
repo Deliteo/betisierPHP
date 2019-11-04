@@ -135,6 +135,17 @@
       return $num;
     }
 
+    public function connexion($login){
+
+      $sql = "SELECT per_pwd as mdp FROM personne WHERE per_login='$login'";
+      $req=$this->db->query($sql);
+
+      $pwd = $req->fetch(PDO::FETCH_OBJ);
+
+      return $pwd;
+
+    }
+
 }
 
 ?>
