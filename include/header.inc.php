@@ -13,7 +13,7 @@
 	<body>
 	<div id="header">
 		<div id="connect">
-
+            <a href="index.php?page=13">Connexion</a>
 		</div>
 		<div id="entete">
 			<div id="logo">
