@@ -1,5 +1,6 @@
 <?php $db = new MyPdo();
-$manager=new PersonneManager($db);?>
+$manager=new PersonneManager($db);
+?>
 
 <h1> Pour vous connecter </h1>
 
@@ -7,7 +8,10 @@ $manager=new PersonneManager($db);?>
 
 if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["verification"])) {
 
-
+  $nb1= rand(1,9);
+  $nb2= rand(1,9);
+  $_SESSION["nb1"]=$nb1;
+  $_SESSION["nb2"]=$nb2;
 
  ?>
 
@@ -17,9 +21,9 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
    <b> Mot de passe : </b>
   <input type="password" name="passWord"><br>
 
-  <img class="nombre" src="image/nb/8" alt="nombre1" title="nombre1"/>
+  <img src="<?php echo 'image/nb/'.$nb1 ?>" alt="nombre1" name="nombre1" value="<?php echo 'image/nb/'.$nb1 ?>"/>
   <b> + </b>
-  <img class="nombre" src="image/nb/5" alt="nombre2" title="nombre2"/>
+  <img src="<?php echo 'image/nb/'.$nb2 ?>" alt="nombre2" name="nombre2" value="<?php echo 'image/nb/'.$nb2 ?>"/>
   <b> = </b>
   <input type="text" name="verification"><br>
 
@@ -30,15 +34,17 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
 
 
 }else{
+
+
+  $verif= $_POST["verification"];
+  $resultat = $_SESSION["nb1"]+$_SESSION["nb2"];
+
   $login=$_POST["nomUtilisateur"];
-//  echo $login;
 
   $motDePasse= $_POST["passWord"];
-//  echo $motDePasse;
 
   $salt = "48@!alsd";
   $pwd_crypte= sha1(sha1($motDePasse).$salt);
-//  echo $pwd_crypte;
 
   $pwd=$manager->connexion($login)->mdp;
   if(empty($pwd)){
@@ -46,7 +52,7 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
   }
 
 
-  if($pwd==$pwd_crypte){
+  if(($pwd==$pwd_crypte )&&($resultat==$verif)) {
 
     $num=$manager->getNumPer($login)->num;
 
@@ -59,7 +65,7 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
       <br>
       Redirection automatique dans 2 secondes.
     </p>
-    <meta http-equiv="refresh" content="2;url=index.php"/>
+    <meta http-equiv="refresh" content="2;url=index.php"/> 
 
     <?php
   }

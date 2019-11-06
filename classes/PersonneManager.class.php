@@ -127,6 +127,12 @@
       return $listeDiv;
     }
 
+    public function listeFormation(){
+      $sql = "SELECT fon_libelle from fonction";
+      $listForm=$this->db->query($sql);
+      return $listForm;
+    }
+
     public function getNumPer($log){
       $sql = "SELECT per_num as num from personne where per_login='$log'";
       $req=$this->db->query($sql);
@@ -144,6 +150,63 @@
 
       return $pwd;
 
+    }
+
+    public function ajouterEtudiant($perNum,$depNum,$divNum){
+      $requete = $this->db->prepare(
+        'INSERT INTO etudiant (per_num,dep_num,div_num) VALUES (:per_num,:dep_num,:div_num);');
+        $requete->bindValue(':per_num',$perNum);
+        $requete->bindValue(':dep_num',$depNum);
+        $requete->bindValue(':div_num',$divNum);
+
+        $retour=$requete->execute();
+        return $retour;
+
+    }
+
+    public function getNumDep($nomDep){
+      $sql = "SELECT dep_num from departement where dep_nom='$nomDep'";
+      $req=$this->db->query($sql);
+
+      $num=$req->fetch(PDO::FETCH_OBJ);
+      return $num;
+    }
+
+    public function getNumDiv($nomDiv){
+      $sql = "SELECT div_num from division where div_nom='$nomDiv'";
+      $req=$this->db->query($sql);
+
+      $num=$req->fetch(PDO::FETCH_OBJ);
+      return $num;
+    }
+
+    public function getNumFonction($nomFon){
+      $sql = "SELECT fon_num from fonction where fon_libelle='$nomFon'";
+      $req=$this->db->query($sql);
+
+      $num=$req->fetch(PDO::FETCH_OBJ);
+      return $num;
+    }
+
+    public function ajouterSalarie($perNum,$telPro,$formation){
+      $requete = $this->db->prepare(
+        'INSERT INTO salarie (per_num,sal_telprof,fon_num) VALUES (:per_num,:sal_telprof,:fon_num);');
+        $requete->bindValue(':per_num',$perNum);
+        $requete->bindValue(':sal_telprof',$telPro);
+        $requete->bindValue(':fon_num',$formation);
+
+        $retour=$requete->execute();
+        return $retour;
+
+    }
+
+    public function perExiste($log){
+      if($this->getNumPer($log)!=null){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
 
 }

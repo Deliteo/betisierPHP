@@ -1,2 +1,2 @@
 
-	<h1>Modifier une personne enregistrées</h1>
+	<h1>Modifier une personne enregistrée</h1>
