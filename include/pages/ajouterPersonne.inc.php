@@ -1,5 +1,8 @@
 <?php $db = new MyPdo();
-$manager=new PersonneManager($db);?>
+$manager=new PersonneManager($db);
+$managerEtudiant=new EtudiantManager($db);
+$managerSalarie=new SalarieManager($db);
+?>
 <html>
 	<h1>Ajouter une personne</h1>
 
@@ -7,22 +10,20 @@ $manager=new PersonneManager($db);?>
   if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empty($_POST["mail"])&&!empty($_POST["login"])&&!empty($_POST["motDePasse"])&&$_POST["categorie"]=="etudiant"&&!$manager->perExiste($_POST['login'])==true){
 
 		$manager->ajouterPersonne($_POST["nom"],$_POST["prenom"],$_POST["tel"],$_POST["mail"],$_POST["login"],$_POST["motDePasse"]);
-		$listeDiv=$manager->listeDivision();
-
-
+		$listeDiv=$managerEtudiant->listeDivision();
 
 		echo "Annee : ";
 
 		?><form method="post" action="#">
 		<select name="division"><?php
-		while ($donnees = $listeDiv->fetch()){?>
-			 		<option name="division" id="division" value="<?php echo $donnees['nom_div'] ?>" ><?php echo $donnees['nom_div'] ?></option>
+		foreach($listeDiv as $donnees=>$listeDiv):?>
+			 		<option name="division" id="division" value="<?php echo $listeDiv['nom_div'] ?>" ><?php echo $listeDiv['nom_div'] ?></option>
 			<?php
-		}?></select><br>
+		endforeach?></select><br>
 	<?php
 
 
-		$listeDep=$manager->listeDepartement();
+		$listeDep=$managerEtudiant->listeDepartement();
 		echo "Département : ";?>
 
 
@@ -47,46 +48,43 @@ $manager=new PersonneManager($db);?>
   else{
 		if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empty($_POST["mail"])&&!empty($_POST["login"])&&!empty($_POST["motDePasse"])&&$_POST["categorie"]=="employe"){
 
-			$manager->ajouterPersonne($_POST["nom"],$_POST["prenom"],$_POST["tel"],$_POST["mail"],$_POST["login"],$_POST["motDePasse"]);
-			$listeForm=$manager->listeFormation();
+			$salt="48@!alsd";
+			$motDePasse=sha1(sha1($_POST["motDePasse"]).$salt);
+			$manager->ajouterPersonne($_POST["nom"],$_POST["prenom"],$_POST["tel"],$_POST["mail"],$_POST["login"],$motDePasse);
+			$listeForm=$managerSalarie->listeFormation();
 
 
 			?><form method="post" action="#">
-				 <p>Telephone professionel : <input type="text" name="telPro" /></p>
+				 <p>Telephone professionnel : <input type="text" name="telPro" /></p>
 				 <?php echo "Fonction : ";?>
 			<select name="formation"><?php
-			while ($donnees = $listeForm->fetch()){?>
+			foreach ($listeForm as $donnees => $listeForm) :?>
 
-						<option name="formation" id="formation" value="<?php echo $donnees['fon_libelle'] ?>" ><?php echo $donnees['fon_libelle'] ?></option>
+						<option name="formation" id="formation" value="<?php echo $listeForm['fon_libelle'] ?>" ><?php echo $listeForm['fon_libelle'] ?></option>
 				<?php
-			}?></select><br>
+			endforeach?></select><br>
 				<button type="submit">valider</button>
 			</form><?php
 
-
-
 				$_SESSION["per_num"]=$manager->getNumPer($_POST["login"])->num;
-
-
-
 
 		}
 		else{
 			if(isset($_POST["division"])){
-				//print_r($_GET);
-				$numDep=$manager->getNumDep($_POST["nom_dep"])->dep_num;
-				$divNum=$manager->getNumDiv($_POST["division"])->div_num;
 
-				$manager->ajouterEtudiant($_SESSION["per_num"],$numDep,$divNum);
+				$numDep=$managerEtudiant->getNumDep($_POST["nom_dep"])->dep_num;
+				$divNum=$managerEtudiant->getNumDiv($_POST["division"])->div_num;
+
+				$managerEtudiant->ajouterEtudiant($_SESSION["per_num"],$numDep,$divNum);
 				echo "l'étudiant a été ajouté";
 
 			}
 			if(isset($_POST["formation"])){
 				$telPro=$_POST['telPro'];
-				$numForm=$manager->getNumFonction($_POST['formation'])->fon_num;
+				$numForm=$managerSalarie->getNumFonction($_POST['formation'])->fon_num;
 
 
-				$manager->ajouterSalarie($_SESSION["per_num"],$telPro,$numForm);
+				$managerSalarie->ajouterSalarie($_SESSION["per_num"],$telPro,$numForm);
 				echo "le salarie a été ajouté";
 			}
 	    ?>
@@ -97,7 +95,7 @@ $manager=new PersonneManager($db);?>
 	<p> Téléphone :  <input type="text" id="tel" name="tel" value="<?php if(isset($_POST['tel'])){ echo $_POST['tel']; 	}?>"> </p>
 	<p> Mail :  <input type="text" id="mail" name="mail" value="<?php if(isset($_POST['mail'])){ echo $_POST['mail']; 	}?>"> </p>
 	<p> Login :  <input type="text" id="login" name="login" value="<?php if(isset($_POST['login'])){ echo $_POST['login']; 	}?>"> </p>
-	<p> Mot de passe :  <input type="text" id="motDePasse" name="motDePasse" value="<?php if(isset($_POST['motDePasse'])){ echo $_POST['motDePasse']; 	}?>"> </p>
+	<p> Mot de passe :  <input type="password" id="motDePasse" name="motDePasse" value="<?php if(isset($_POST['motDePasse'])){ echo $_POST['motDePasse']; 	}?>"> </p>
 	<form method="POST" name="cat">
 	categorie
 		<input type="radio" name="categorie" value="etudiant" checked > etudiant

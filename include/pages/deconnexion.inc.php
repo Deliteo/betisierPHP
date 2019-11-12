@@ -1,6 +1,6 @@
 <?php
 
-$_SESSION["prenom"]=""; ?>
+$_SESSION["num"]=""; ?>
 <p> Vous avez bien été déconnecté <br>
   <br>
   Redirection automatique dans 2 secondes.

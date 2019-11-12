@@ -57,15 +57,19 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
     $num=$manager->getNumPer($login)->num;
 
     $prenom=$manager->getPrenomPer($num)->prenom;
+    $admin=$manager->getAdmin($num);
 
+    $_SESSION['admin']=$admin;
+    $_SESSION['num']=$num;
     $_SESSION['prenom']=$prenom;
+
 
     ?>
     <p> Vous avez bien été connecté <br>
       <br>
       Redirection automatique dans 2 secondes.
     </p>
-    <meta http-equiv="refresh" content="2;url=index.php"/> 
+    <meta http-equiv="refresh" content="2;url=index.php"/>
 
     <?php
   }
@@ -78,9 +82,9 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
        <b> Mot de passe : </b>
       <input type="password" name="passWord"><br>
 
-      <img class="nombre" src="image/nb/8" alt="nombre1" title="nombre1"/>
+      <img src="<?php echo 'image/nb/'.$_SESSION["nb1"] ?>" alt="nombre1" name="nombre1" value="<?php echo 'image/nb/'.$_SESSION["nb1"] ?>"/>
       <b> + </b>
-      <img class="nombre" src="image/nb/5" alt="nombre2" title="nombre2"/>
+      <img src="<?php echo 'image/nb/'.$_SESSION["nb2"] ?>" alt="nombre2" name="nombre2" value="<?php echo 'image/nb/'.$_SESSION["nb2"] ?>"/>
       <b> = </b>
       <input type="text" name="verification"><br>
 
