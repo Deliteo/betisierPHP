@@ -83,9 +83,7 @@ case 13:
 case 14:
 		include("pages/deconnexion.inc.php");
 		break;
-case 15:
-		include("pages/ModifierPersonne.inc.php");
-		break;
+
 default : 	include_once('pages/accueil.inc.php');
 }
 

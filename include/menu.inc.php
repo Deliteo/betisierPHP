@@ -7,7 +7,7 @@
 			<?php// if(!empty ($_SESSION['num'])){ ?>
 			<li><a href="index.php?page=1">Ajouter</a></li>
 			<?php// if($_SESSION['admin']==true){ ?>
-			<li><a href="index.php?page=15">Modifier</a></li>
+			<li><a href="index.php?page=3">Modifier</a></li>
 			<li><a href="index.php?page=4">Supprimer</a></li>
 		<?php// }}?>
 		</ul>
