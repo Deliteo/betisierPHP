@@ -6,7 +6,6 @@ $manager = new CitationManager($db); ?>
 $nombreCitation=$manager->getNombre()->nombreCitation ;
 echo "Actuellement ".$nombreCitation." citation(s) enregistrée(s)";
  ?>
-
 <table>
 <tr>
 	<th>Nom de l'enseignant</th>
@@ -29,7 +28,22 @@ foreach ($listeCitations as $citation) {
 		<td><?php echo $citation->getCitNote(); ?></td>
 		<?php if(!empty($_SESSION['num'])){
 			?>
-		<td> test </td>
+		<td>
+			<?php
+			$perm=$manager->getPermVote($_SESSION['num'],$citation->getCitNum());
+				if($perm==true){
+					?>
+					<a href="index.php?page=4"><img class="logo" src="image/modifier.png" alt="imgModifier" title="Noter"/></a>
+					<?php
+				} else {
+
+					?>
+					<img class="logo" src="image/erreur.png" alt="imgErreur" title="PasNoter"/>
+					<?php
+				}
+
+			?>
+		</td>
 	<?php		}  ?>
 	</tr>
 <?php }
