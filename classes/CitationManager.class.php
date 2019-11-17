@@ -23,6 +23,17 @@
     $req->closeCursor();
   }
 
+  public function getNombre(){
+
+    $sql = 'SELECT count(cit_num) as nombreCitation from Citation
+    WHERE cit_valide=1 and cit_date_valide IS NOT NULL';
+    $req=$this->db->query($sql);
+
+    $nombreCitation=$req->fetch(PDO::FETCH_OBJ);
+
+    return $nombreCitation;
+  }
+
   public function getListNotable(){
     $listeCitations = array();
     $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num,cit_libelle,cit_date,avg(vot_valeur) as cit_note FROM citation c
