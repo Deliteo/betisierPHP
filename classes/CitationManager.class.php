@@ -52,6 +52,27 @@
 
   }
 
+  public function getLibelle($citnum){
+    $req=$this->db->prepare('SELECT cit_libelle as libelle FROM citation WHERE cit_num=:citnum');
+    $req->bindValue(':citnum',$citnum,PDO::PARAM_INT);
+    $req->execute();
+    $resultat=$req->fetch(PDO::FETCH_OBJ);
+    $req->closeCursor();
+    return $resultat->libelle;
+
+  }
+
+  public function getNomPers($citnum){
+    $req=$this->db->prepare('SELECT concat(per_nom,per_prenom) as cit_nom_pers FROM citation c
+    JOIN personne p ON p.per_num=c.per_num WHERE cit_num=:citnum');
+    $req->bindValue(':citnum',$citnum,PDO::PARAM_INT);
+    $req->execute();
+    $resultat=$req->fetch(PDO::FETCH_OBJ);
+    $req->closeCursor();
+    return $resultat->cit_nom_pers;
+
+  }
+
 }
 // test de commentaire
 // test de fetch

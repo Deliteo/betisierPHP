@@ -33,7 +33,7 @@ foreach ($listeCitations as $citation) {
 			$perm=$manager->getPermVote($_SESSION['num'],$citation->getCitNum());
 				if($perm==true){
 					?>
-					<a href="index.php?page=4"><img class="logo" src="image/modifier.png" alt="imgModifier" title="Noter"/></a>
+					<a href="index.php?page=15&numcit=<?php echo $citation->getCitNum();?>"><img class="logo" src="image/modifier.png" alt="imgModifier" title="Noter"/></a>
 					<?php
 				} else {
 

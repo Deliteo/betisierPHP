@@ -84,6 +84,10 @@ case 14:
 		include("pages/deconnexion.inc.php");
 		break;
 
+case 15:
+	include("pages/noterCitation.inc.php");
+	break;
+
 default : 	include_once('pages/accueil.inc.php');
 }
 
