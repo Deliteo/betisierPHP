@@ -9,7 +9,7 @@ if(empty($_POST['note'])){
 ?>
 <form method="post" action="#">
 <p> <b> Citation : </b> "<?php echo $manager->getLibelle($numeroCitation); ?>"  de <?php echo $manager->getNomPers($numeroCitation); ?> </p>
-<p> <b> Note : </b>  <input type="text" id="note" name="note">
+<p> <b> Note : </b>  <input type="text" id="note" name="note" size="1">
   <button type="submit"> Valider </button>
 
 </form>
@@ -23,7 +23,7 @@ else{
     <br>
     Redirection automatique dans 2 secondes.
   </p>
-  <meta http-equiv="refresh" content="2;url=index.php?page=6"/> 
+  <meta http-equiv="refresh" content="2;url=index.php?page=6"/>
   <?php
 }
 ?>

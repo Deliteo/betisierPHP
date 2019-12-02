@@ -44,6 +44,17 @@ case 6:
 	// inclure ici la page liste des citations
 	include("pages/listerCitation.inc.php");
     break;
+
+case 15:
+	//inclure ici la page noter citation
+	include("pages/noterCitation.inc.php");
+		break;
+
+case 16:
+	// inclure ici la page pour rechercher citations
+	include("pages/rechercherCitation.inc.php");
+		break;
+
 //
 // Villes
 //
@@ -58,11 +69,12 @@ case 8:
 	include("pages/listerVilles.inc.php");
     break;
 
+
 //
 
 //
 case 9:
-
+	// inclure ici la page
     break;
 case 10:
 	// inclure ici la page....
@@ -83,10 +95,6 @@ case 13:
 case 14:
 		include("pages/deconnexion.inc.php");
 		break;
-
-case 15:
-	include("pages/noterCitation.inc.php");
-	break;
 
 default : 	include_once('pages/accueil.inc.php');
 }
