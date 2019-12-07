@@ -8,7 +8,7 @@
 	<h1>Modifier une personne enregistrée</h1>
 <?php
 if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empty($_POST["mail"])&&!empty($_POST["login"])&&!empty($_POST["motDePasse"])){
-		$manager->modifierPersonne($_POST["nom"],$_POST["prenom"],$_POST["tel"],$_POST["mail"],$_POST["login"],$_POST["motDePasse"],$_GET["nump"]);
+		$manager->modifierPersonne($_POST["nom"],$_POST["prenom"],$_POST["tel"],$_POST["mail"],$_POST["login"],$manager->crypterPWD($_POST["motDePasse"]),$_GET["nump"]);
 
 		if($_SESSION["personne_etudiant"]&&$_POST["categorie"]=="etudiant"){
 			$_SESSION["meme_categorie"]=true;

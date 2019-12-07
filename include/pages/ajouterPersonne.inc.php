@@ -16,7 +16,8 @@ $_SESSION['etudiant']=new etudiant($db);
 			$_SESSION['personne']->setTelPer($_POST['tel']);
 			$_SESSION['personne']->setMailPer($_POST['mail']);
 			$_SESSION['personne']->setLoginPer($_POST['login']);
-			$_SESSION['personne']->setPwdPer($_POST['motDePasse']);
+			$_SESSION['personne']->setPwdPer($manager->crypterPWD($_POST['motDePasse']));
+
 
 
 		$manager->ajouterPersonne($_SESSION['personne']);
@@ -63,7 +64,7 @@ $_SESSION['etudiant']=new etudiant($db);
 			$_SESSION['personne']->setTelPer($_POST['tel']);
 			$_SESSION['personne']->setMailPer($_POST['mail']);
 			$_SESSION['personne']->setLoginPer($_POST['login']);
-			$_SESSION['personne']->setPwdPer($_POST['motDePasse']);
+			$_SESSION['personne']->setPwdPer($manager->crypterPWD($_POST['motDePasse']));
 
 			$manager->ajouterPersonne($_SESSION['personne']);
 			$listeForm=$managerSalarie->listeFormation();

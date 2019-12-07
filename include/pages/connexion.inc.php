@@ -42,11 +42,10 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
 
   $motDePasse= $_POST["passWord"];
 
-  $salt = "48@!alsd";
-  $pwd_crypte= sha1(sha1($motDePasse).$salt);
+
   if($manager->connexion($login)!=null){
     $pwd=$manager->connexion($login)->mdp;
-    $pwd= sha1(sha1($pwd).$salt);
+    $pwd=$manager->crypterPWD($pwd);
   }
   else{
     unset($pwd);
@@ -56,6 +55,8 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
   if(empty($pwd)){
     $pwd=null;
   }
+
+  $pwd_crypte=$manager->crypterPWD($motDePasse);
 
   if(($pwd==$pwd_crypte )&&($resultat==$verif)) {
 
@@ -72,7 +73,7 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
       <br>
       Redirection automatique dans 2 secondes.
     </p>
-    <meta http-equiv="refresh" content="2;url=index.php"/>
+  <!--  <meta http-equiv="refresh" content="2;url=index.php"/> -->
 
     <?php
   }
