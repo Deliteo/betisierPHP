@@ -6,7 +6,7 @@
 
   public function getList(){
     $listeCitations = array();
-    $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num,cit_libelle,cit_date,avg(vot_valeur) as cit_note FROM citation c
+    $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date,avg(vot_valeur) as cit_note FROM citation c
     INNER JOIN personne p ON p.per_num=c.per_num
     INNER JOIN vote v ON v.cit_num=c.cit_num
     WHERE cit_valide=1 and cit_date_valide IS NOT NULL
@@ -235,6 +235,22 @@ public function supprimerVotePer($numc){
       return "";
     }
 
+    $req->closeCursor();
+  }
+
+  public function getListeCitationNonValide(){
+    $listeCitations = array();
+    $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date FROM citation c
+    INNER JOIN personne p ON p.per_num=c.per_num
+    WHERE cit_valide=0 and cit_date_valide IS NULL
+    ORDER BY cit_date DESC';
+    $req= $this->db->query($sql);
+    while ($citation = $req->fetch(PDO::FETCH_OBJ)){
+
+      $listeCitations[]=new Citation($citation);
+
+    }
+    return $listeCitations;
     $req->closeCursor();
   }
 
