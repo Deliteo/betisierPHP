@@ -254,6 +254,18 @@ public function supprimerVotePer($numc){
     $req->closeCursor();
   }
 
+  public function validerCitation($cit){
+    $date=date("Y-m-d");
+    $sql='UPDATE citation SET cit_valide=1, cit_date_valide=:date WHERE cit_num=:citnum';
+
+    $requete=$this->db->prepare($sql);
+    $requete->bindValue(':date',$date);
+    $requete->bindValue(':citnum',$cit);
+    $retour=$requete->execute();
+    $requete->closeCursor();
+    return $retour;
+  }
+
 
 
 }

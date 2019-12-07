@@ -73,7 +73,7 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
       <br>
       Redirection automatique dans 2 secondes.
     </p>
-  <!--  <meta http-equiv="refresh" content="2;url=index.php"/> -->
+  <meta http-equiv="refresh" content="2;url=index.php"/>
 
     <?php
   }

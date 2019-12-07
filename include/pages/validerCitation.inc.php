@@ -2,7 +2,7 @@
 $manager = new CitationManager($db); ?>
 <h1> Valider une citation </h1>
 
-<?php if(!isset($_GET['numcit'])){ ?>
+<?php if(!isset($_GET['numcit'])&&!isset($_GET['numcitbis'])){ ?>
   <table>
     <tr>
       <th>N° Citation</th>
@@ -26,13 +26,20 @@ $manager = new CitationManager($db); ?>
 
   </table>
 <?php }
-else{
+else if(!isset($_GET['numcitbis'])){
   $numeroCitation=$_GET['numcit'];
+
   ?>
-  <p>Vous êtes en train de valider la ciation suivante :</p>
-  <form method="post" action="index.php?page=9&numcit=<?php echo $numeroCitation?>">
+  <p>Vous êtes en train de valider la citation suivante :</p>
+  <form method="post" action="index.php?page=9&numcitbis=<?php echo $numeroCitation?>">
     <p> <b> Citation : </b> "<?php echo $manager->getLibelle($numeroCitation); ?>"  de <?php echo $manager->getNomPers($numeroCitation); ?> </p>
     <button type="submit"> Valider </button>
   </form>
+  <?php
+}else{
+  $numeroCitation=$_GET['numcitbis'];
+  $manager->validerCitation($numeroCitation);
+  ?>
+  <p> La citation a bien été validée </p>
   <?php
 } ?>
