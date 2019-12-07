@@ -28,5 +28,25 @@
         return $retour;
 
     }
+
+    public function modifierSalarie($nump,$telPro,$formation){
+      $requete = $this->db->prepare(
+        "UPDATE salarie set sal_telprof=:telpro,fon_num=:formation where per_num='$nump';");
+        $requete->bindValue(':telpro',$telPro);
+        $requete->bindValue(':formation',$formation);
+
+        $retour=$requete->execute();
+        return $retour;
+
+    }
+
+    public function supprimerSalarie($nump){
+      $requete = $this->db->prepare(
+        "DELETE from salarie where per_num='$nump';");
+
+        $retour=$requete->execute();
+        return $retour;
+
+    }
   }
   ?>

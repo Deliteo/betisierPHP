@@ -12,7 +12,6 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
   $nb2= rand(1,9);
   $_SESSION["nb1"]=$nb1;
   $_SESSION["nb2"]=$nb2;
-
  ?>
 
 <form name="connexion" id="connexion" action="#" method="POST">
@@ -45,24 +44,28 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
 
   $salt = "48@!alsd";
   $pwd_crypte= sha1(sha1($motDePasse).$salt);
+  if($manager->connexion($login)!=null){
+    $pwd=$manager->connexion($login)->mdp;
+    $pwd= sha1(sha1($pwd).$salt);
+  }
+  else{
+    unset($pwd);
+  }
 
   $pwd=$manager->connexion($login)->mdp;
   if(empty($pwd)){
     $pwd=null;
   }
 
-
   if(($pwd==$pwd_crypte )&&($resultat==$verif)) {
 
     $num=$manager->getNumPer($login)->num;
-
     $prenom=$manager->getPrenomPer($num)->prenom;
     $admin=$manager->getAdmin($num);
 
     $_SESSION['admin']=$admin;
     $_SESSION['num']=$num;
     $_SESSION['prenom']=$prenom;
-
 
     ?>
     <p> Vous avez bien été connecté <br>

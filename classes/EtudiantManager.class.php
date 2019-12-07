@@ -48,6 +48,26 @@
           return $retour;
 
       }
+
+      public function modifierEtudiant($nump,$depNum,$divNum){
+        $requete = $this->db->prepare(
+          "UPDATE etudiant set dep_num=:dep_num,div_num=:div_num where per_num='$nump';");
+          $requete->bindValue(':dep_num',$depNum);
+          $requete->bindValue(':div_num',$divNum);
+
+          $retour=$requete->execute();
+          return $retour;
+
+      }
+
+      public function supprimerEtudiant($nump){
+        $requete = $this->db->prepare(
+          "DELETE FROM etudiant where per_num='$nump';");
+
+          $retour=$requete->execute();
+          return $retour;
+
+      }
 }
 
 ?>

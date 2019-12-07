@@ -69,6 +69,13 @@ case 8:
 	include("pages/listerVilles.inc.php");
     break;
 
+case 11:
+	include("pages/ModifierVille.inc.php");
+	break;
+	
+case 12:
+	include("pages/supprimerVille.inc.php");
+	break;
 
 //
 
@@ -80,13 +87,7 @@ case 10:
 	// inclure ici la page....
     break;
 
-case 11:
-	// inclure ici la page...
-    break;
 
-case 12:
-	// inclure ici la page...
-    break;
 
 case 13:
 		include("pages/connexion.inc.php");

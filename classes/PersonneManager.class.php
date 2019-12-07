@@ -53,6 +53,14 @@ class PersonneManager{
       return $tel;
     }
 
+    public function getLogPer($nump){
+      $sql = "SELECT per_login as log from Personne where per_num=$nump";
+      $req=$this->db->query($sql);
+
+      $log=$req->fetch(PDO::FETCH_OBJ);
+      return $log;
+    }
+
     public function getDepPer($nump){
       $sql = "SELECT dep_nom as dep from departement d join etudiant e on d.dep_num=e.dep_num where per_num=$nump";
       $req=$this->db->query($sql);
@@ -97,21 +105,21 @@ class PersonneManager{
       return $fonction;
     }
 
-    public function ajouterPersonne($nom,$prenom,$tel,$mail,$login,$motDePasse){
-        $requete = $this->db->prepare(
-        'INSERT INTO personne (per_nom,per_prenom,per_tel,per_mail,per_admin,per_login,per_pwd) VALUES (:per_nom,:per_prenom,:per_tel,:per_mail,:per_admin,:per_login,:per_pwd);');
+    public function ajouterPersonne($personne){
+      $requete = $this->db->prepare(
+      'INSERT INTO personne (per_nom,per_prenom,per_tel,per_mail,per_admin,per_login,per_pwd) VALUES (:per_nom,:per_prenom,:per_tel,:per_mail,:per_admin,:per_login,:per_pwd);');
 
-        $requete->bindValue(':per_nom',$nom);
-        $requete->bindValue(':per_prenom',$prenom);
-        $requete->bindValue(':per_tel',$tel);
-        $requete->bindValue(':per_mail',$mail);
-        $requete->bindValue(':per_admin',0);
-        $requete->bindValue(':per_login',$login);
-        $requete->bindValue(':per_pwd',$motDePasse);
+      $requete->bindValue(':per_nom',$personne->getNomPer());
+      $requete->bindValue(':per_prenom',$personne->getPrenomPer());
+      $requete->bindValue(':per_tel',$personne->getTelPer());
+      $requete->bindValue(':per_mail',$personne->getMailPer());
+      $requete->bindValue(':per_admin',0);
+      $requete->bindValue(':per_login',$personne->getLoginPer());
+      $requete->bindValue(':per_pwd',$personne->getPwdPer());
 
-        $retour=$requete->execute();
-        return $retour;
-    }
+      $retour=$requete->execute();
+      return $retour;
+  }
 
     public function getNumPer($log){
       $sql = "SELECT per_num as num from personne where per_login='$log'";
@@ -119,6 +127,14 @@ class PersonneManager{
 
       $num=$req->fetch(PDO::FETCH_OBJ);
       return $num;
+    }
+
+    public function getNomPer($nump){
+      $sql = "SELECT per_nom as nom from Personne where per_num=$nump";
+      $req=$this->db->query($sql);
+
+      $nom=$req->fetch(PDO::FETCH_OBJ);
+      return $nom;
     }
 
     public function getAdmin($num){
@@ -154,6 +170,37 @@ class PersonneManager{
         return false;
       }
     }
+
+    public function modifierPersonne($nom,$prenom,$tel,$mail,$login,$motDePasse,$nump){
+      $requete = $this->db->prepare(
+      "UPDATE personne set per_nom=:per_nom,per_prenom=:per_prenom,per_tel=:per_tel,per_mail=:per_mail,per_admin=:per_admin,per_login=:per_login,per_pwd=:per_pwd where per_num='$nump';");
+
+      $requete->bindValue(':per_nom',$nom);
+      $requete->bindValue(':per_prenom',$prenom);
+      $requete->bindValue(':per_tel',$tel);
+      $requete->bindValue(':per_mail',$mail);
+      $requete->bindValue(':per_admin',0);
+      $requete->bindValue(':per_login',$login);
+      $requete->bindValue(':per_pwd',$motDePasse);
+
+      $retour=$requete->execute();
+      return $retour;
+  }
+
+  public function listePersonne(){
+    $sql = "SELECT per_login as log from personne";
+    $listePer=$this->db->query($sql);
+
+    return $listePer;
+  }
+
+  public function supprimerPersonne($nump){
+    $requete = $this->db->prepare(
+      "DELETE from personne where per_num='$nump';");
+
+      $retour=$requete->execute();
+      return $retour;
+  }
 
 }
 
