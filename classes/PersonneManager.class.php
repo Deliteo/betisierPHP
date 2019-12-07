@@ -202,6 +202,12 @@ class PersonneManager{
       return $retour;
   }
 
+  public function crypterPWD($pwd){
+    $salt = "48@!alsd";
+    $pwd_crypte= sha1(sha1($pwd).$salt);
+    return $pwd_crypte;
+  }
+
 }
 
 ?>
