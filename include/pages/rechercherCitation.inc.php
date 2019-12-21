@@ -1,9 +1,11 @@
 <?php $db = new MyPdo();
-$manager = new CitationManager($db); ?>
+$manager = new CitationManager($db);
+$voteManager = new VoteManager($db); ?>
 <h1> Rechercher une citation </h1>
 <?php
 if(empty($_POST['nomEnseignant'])&&empty($_POST['dateCitation'])&&empty($_POST['noteCitation'])){
   ?>
+  <p>Remplissez au moins un des champs suivant pour rechercher une citation : </p>
   <form method="post" action="#">
     <p> Nom et prenom de l'enseignant : <input type="text" id="nomEnseignant" name="nomEnseignant"></p>
     <p> Date : <input type="text" id="dateCitation" name="dateCitation" ></p>
@@ -37,7 +39,11 @@ else{
           <td><?php echo $citation->getCitNomPers(); ?></td>
           <td><?php echo $citation->getCitLibelle(); ?></td>
           <td><?php echo $citation->getCitDate(); ?></td>
-          <td><?php echo $citation->getCitNote(); ?></td>
+          <td><?php
+          $numCit=$citation->getCitNum();
+    			$moyenne=$voteManager->getMoyenneVote($numCit);
+          echo $moyenne;
+          ?></td>
           <?php if(!empty($_SESSION['num'])){
             ?>
             <td>

@@ -1,5 +1,6 @@
 <?php $db = new MyPdo();
-$manager = new CitationManager($db); ?>
+$manager = new CitationManager($db);
+$voteManager = new VoteManager($db); ?>
 	<h1>Liste des citations déposées</h1>
 
 <?php
@@ -25,7 +26,16 @@ foreach ($listeCitations as $citation) {
 		<td><?php echo $citation->getCitNomPers(); ?></td>
     <td><?php echo $citation->getCitLibelle(); ?></td>
     <td><?php echo $citation->getCitDate(); ?></td>
-		<td><?php echo $citation->getCitNote(); ?></td>
+		<td><?php
+			$numCit=$citation->getCitNum();
+			$moyenne=$voteManager->getMoyenneVote($numCit);
+			if(empty($moyenne)){
+				echo 0;
+			}else{
+				echo $moyenne;
+			}
+		//if($voteManager->getMoyenneVote($citation->getCitNum())->moyVot!=NULL){
+?></td>
 		<?php if(!empty($_SESSION['num'])){
 			?>
 		<td>
@@ -33,12 +43,12 @@ foreach ($listeCitations as $citation) {
 			$perm=$manager->getPermVote($_SESSION['num'],$citation->getCitNum());
 				if($perm==true){
 					?>
-					<a href="index.php?page=15&numcit=<?php echo $citation->getCitNum();?>"><img class="logo" src="image/modifier.png" alt="imgModifier" title="Noter"/></a>
+					<a href="index.php?page=15&numcit=<?php echo $citation->getCitNum();?>"><img class="iconeNoter" src="image/modifier.png" alt="imgModifier" title="Noter"/></a>
 					<?php
 				} else {
 
 					?>
-					<img class="logo" src="image/erreur.png" alt="imgErreur" title="PasNoter"/>
+					<img class="iconeNoter" src="image/erreur.png" alt="imgErreur" title="PasNoter"/>
 					<?php
 				}
 

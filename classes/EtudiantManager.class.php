@@ -8,32 +8,32 @@
 
   public function listeDivision(){
     $sql = "SELECT div_nom as nom_div from division";
-    $listeDiv=$this->db->query($sql);
-
+    $listeDiv=$this->db->prepare($sql);
+    $listeDiv->execute();
     return $listeDiv;
   }
 
   public function listeDepartement(){
     $sql = "SELECT dep_nom as nom_dep from departement";
-    $listeDep=$this->db->query($sql);
-
+    $listeDep=$this->db->prepare($sql);
+    $listeDep->execute();
     return $listeDep;
   }
 
   public function getNumDep($nomDep){
     $sql = "SELECT dep_num from departement where dep_nom='$nomDep'";
-    $req=$this->db->query($sql);
-
-    $num=$req->fetch(PDO::FETCH_OBJ);
-    return $num;
+    $num=$this->db->prepare($sql);
+    $num->execute();
+    $req=$num->fetch(PDO::FETCH_OBJ);
+    return $req;
   }
 
   public function getNumDiv($nomDiv){
     $sql = "SELECT div_num from division where div_nom='$nomDiv'";
-    $req=$this->db->query($sql);
-
-    $num=$req->fetch(PDO::FETCH_OBJ);
-    return $num;
+    $num=$this->db->prepare($sql);
+    $num->execute();
+    $req=$num->fetch(PDO::FETCH_OBJ);
+    return $req;
   }
 
 

@@ -6,7 +6,6 @@ $_SESSION['personne']=new Personne($db);
 $_SESSION['salarie']=new salarie($db);
 $_SESSION['etudiant']=new etudiant($db);
 ?>
-<html>
 	<h1>Ajouter une personne</h1>
 
 <?php
@@ -83,7 +82,7 @@ $_SESSION['etudiant']=new etudiant($db);
 			</form><?php
 
 
-
+			$_SESSION["per_num"]=$manager->getNumPer($_POST["login"])->num;
 
 		}
 		else{
@@ -94,7 +93,7 @@ $_SESSION['etudiant']=new etudiant($db);
 				$_SESSION['etudiant']->setDepEtu($numDep);
 				$_SESSION['etudiant']->setDivEtu($divNum);
 				$managerEtudiant->ajouterEtudiant($_SESSION["per_num"],$numDep,$divNum);
-				echo "l'étudiant a été ajouté";
+				echo '<img class="valid" src="image/valid.png" alt="valid" title="valid"/>L\'étudiant a été ajouté';
 
 			}
 			if(isset($_POST["formation"])){
@@ -103,7 +102,7 @@ $_SESSION['etudiant']=new etudiant($db);
 				$_SESSION['salarie']->setTelProf($telPro);
 				$_SESSION['salarie']->setFonNum($numForm);
 				$managerSalarie->ajouterSalarie($_SESSION["per_num"],$telPro,$numForm);
-				echo "le salarie a été ajouté";
+				echo '<img class="valid" src="image/valid.png" alt="valid" title="valid"/>le salarie a été ajouté';
 			}
 	    ?>
 
@@ -114,12 +113,11 @@ $_SESSION['etudiant']=new etudiant($db);
 	<p> Mail :  <input type="text" id="mail" name="mail" value="<?php if(isset($_POST['mail'])){ echo $_POST['mail']; 	}?>"> </p>
 	<p> Login :  <input type="text" id="login" name="login" value="<?php if(isset($_POST['login'])){ echo $_POST['login']; 	}?>"> </p>
 	<p> Mot de passe :  <input type="text" id="motDePasse" name="motDePasse" value="<?php if(isset($_POST['motDePasse'])){ echo $_POST['motDePasse']; 	}?>"> </p>
-	<form method="POST" name="cat">
-	categorie
-		<input type="radio" name="categorie" value="etudiant" checked > etudiant
-		<input type="radio" name="categorie" value="employe"> employe<br>
+	<p> Catégorie : 
+		<input type="radio" name="categorie" value="etudiant" checked > Etudiant
+		<input type="radio" name="categorie" value="employe"> Salarié <br>
+		</p>
 		<button type="submit" > Valider </button>
-
 	</form>
 
 
@@ -136,5 +134,4 @@ $_SESSION['etudiant']=new etudiant($db);
 	}
 }
 ?>
-</form>
-</html>
+

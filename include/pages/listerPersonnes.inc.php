@@ -12,7 +12,7 @@
 		$listeNom=$manager->getList();
 		$nombrePersonnes=$manager->getNombre()->nombrePersonne ;
 
-		echo "Actuellement ".$nombrePersonnes." personnes enregistrées";
+		echo "Actuellement ".$nombrePersonnes." personnes enregistrées <br>";
 
 		foreach ($listeNom as $personne) {
 			?>

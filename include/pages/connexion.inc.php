@@ -45,7 +45,6 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
 
   if($manager->connexion($login)!=null){
     $pwd=$manager->connexion($login)->mdp;
-    $pwd=$manager->crypterPWD($pwd);
   }
   else{
     unset($pwd);
@@ -57,7 +56,6 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
   }
 
   $pwd_crypte=$manager->crypterPWD($motDePasse);
-
   if(($pwd==$pwd_crypte )&&($resultat==$verif)) {
 
     $num=$manager->getNumPer($login)->num;
@@ -69,11 +67,11 @@ if(empty($_POST["nomUtilisateur"])||empty($_POST["passWord"])||empty($_POST["ver
     $_SESSION['prenom']=$prenom;
 
     ?>
-    <p> Vous avez bien été connecté <br>
+    <p><img class="valid" src="image/valid.png" alt="valid" title="valid"/>  Vous avez bien été connecté <br>
       <br>
       Redirection automatique dans 2 secondes.
     </p>
-  <meta http-equiv="refresh" content="2;url=index.php"/>
+     <meta http-equiv="refresh" content="2;url=index.php"/>
 
     <?php
   }

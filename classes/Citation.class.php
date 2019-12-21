@@ -6,7 +6,7 @@ class Citation {
   private $cit_num;
   private $cit_libelle;
   private $cit_date;
-  private $cit_note;
+  private $per_num_etu;
 
   public function __construct($valeurs = array()){
     if(!empty($valeurs))
@@ -31,8 +31,8 @@ class Citation {
         case 'cit_date': $this->setCitDate($valeur);
             break;
 
-        case 'cit_note': $this->setCitNote($valeur);
-            break;
+            case 'per_num_etu': $this->setCitPerNumEtu($valeur);
+                break;
       }
 
     }
@@ -71,16 +71,14 @@ class Citation {
     return $this->cit_date;
   }
 
-  public function setCitNote ($cit_note){
-     $this->cit_note= $cit_note;
+  public function setCitPerNumEtu ($per_num_etu){
+     $this->per_num_etu= $per_num_etu;
   }
 
-  public function getCitNote(){
-    return $this->cit_note;
+  public function getCitPerNumEtu(){
+    return $this->per_num_etu;
   }
 }
 
 
-
-
- ?>
+?>

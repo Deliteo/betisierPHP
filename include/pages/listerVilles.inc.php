@@ -1,6 +1,11 @@
 <?php $db = new MyPdo();
 $manager=new VilleManager($db);?>
-	<h1>Liste des villes</h1>
+<h1>Liste des villes</h1>
+<?php
+$nombreVilles=$manager->getNombre()->nombreVilles ;
+
+echo "Actuellement ".$nombreVilles." villes sont enregistrées";
+?>
 	<table>
 	<tr>
 		<th>Numéro</th>
@@ -8,9 +13,7 @@ $manager=new VilleManager($db);?>
 	</tr>
 	<?php
 	$listeVilles=$manager->getList();
-	$nombreVilles=$manager->getNombre()->nombreVilles ;
-
-	echo "Actuellement ".$nombreVilles." villes sont enregistrées";
+	
 	foreach ($listeVilles as $ville) {
 		?>
 

@@ -149,6 +149,7 @@ h1{
 	font-weight: bold;
 }
 .centreImage{
+	margin-top: 20px;
  width:30%;
  }
  .icone{
@@ -157,7 +158,10 @@ h1{
  	top:2px;
 }
 table {
-    border-collapse : collapse ;
+	border-collapse : collapse ;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 th,td {
@@ -167,4 +171,13 @@ th,td {
 .logo{
 	width: 100%;
 	height: 100%;
+}
+
+.valid{
+	width:18px;
+	height:18px;
+}
+
+#suppPers{
+	margin-bottom: 10px;
 }

@@ -9,8 +9,8 @@ class PersonneManager{
       $listeNom=array();
 
       $sql = 'SELECT per_num,per_nom,per_prenom from personne order by per_nom';
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       while ($nom = $req->fetch(PDO::FETCH_OBJ)){
         $listeNom[]=new Personne ($nom);
       }
@@ -22,8 +22,8 @@ class PersonneManager{
     public function getNombre(){
 
       $sql = 'SELECT count(per_nom) as nombrePersonne from Personne';
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $nombrePersonnes=$req->fetch(PDO::FETCH_OBJ);
 
       return $nombrePersonnes;
@@ -31,56 +31,56 @@ class PersonneManager{
 
     public function getPrenomPer($nump){
       $sql = "SELECT per_prenom as prenom from Personne where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $prenom=$req->fetch(PDO::FETCH_OBJ);
       return $prenom;
     }
 
     public function getMailPer($nump){
       $sql = "SELECT per_mail as mail from Personne where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $mail=$req->fetch(PDO::FETCH_OBJ);
       return $mail;
     }
 
     public function getTelPer($nump){
       $sql = "SELECT per_tel as tel from Personne where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $tel=$req->fetch(PDO::FETCH_OBJ);
       return $tel;
     }
 
     public function getLogPer($nump){
       $sql = "SELECT per_login as log from Personne where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $log=$req->fetch(PDO::FETCH_OBJ);
       return $log;
     }
 
     public function getDepPer($nump){
       $sql = "SELECT dep_nom as dep from departement d join etudiant e on d.dep_num=e.dep_num where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $dep=$req->fetch(PDO::FETCH_OBJ);
       return $dep;
     }
 
     public function getVilPer($nump){
       $sql = "SELECT vil_nom as vil from departement d join etudiant e on d.dep_num=e.dep_num join ville v on v.vil_num=d.vil_num where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $vil=$req->fetch(PDO::FETCH_OBJ);
       return $vil;
     }
 
     public function estEtudiant($nump){
       $sql = "SELECT dep_nom as dep from departement d join etudiant e on d.dep_num=e.dep_num where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $dep=$req->fetch(PDO::FETCH_OBJ);
 
        if($dep!=null){
@@ -91,16 +91,16 @@ class PersonneManager{
 
     public function getTelPro($nump){
       $sql = "SELECT sal_telprof as telPro from salarie  where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $telPro=$req->fetch(PDO::FETCH_OBJ);
       return $telPro;
     }
 
     public function getFonction($nump){
       $sql = "SELECT fon_libelle as fonction from salarie s join fonction f on f.fon_num=s.fon_num where per_num=$nump";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $fonction=$req->fetch(PDO::FETCH_OBJ);
       return $fonction;
     }
@@ -123,15 +123,16 @@ class PersonneManager{
 
     public function getNumPer($log){
       $sql = "SELECT per_num as num from personne where per_login='$log'";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $num=$req->fetch(PDO::FETCH_OBJ);
       return $num;
     }
 
     public function getNomPer($nump){
       $sql = "SELECT per_nom as nom from Personne where per_num=$nump";
-      $req=$this->db->query($sql);
+      $req=$this->db->prepare($sql);
+      $req->execute();
 
       $nom=$req->fetch(PDO::FETCH_OBJ);
       return $nom;

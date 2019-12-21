@@ -5,14 +5,15 @@
     }
     public function listeFormation(){
       $sql = "SELECT fon_libelle from fonction";
-      $listForm=$this->db->query($sql);
+      $listForm=$this->db->prepare($sql);
+      $listForm->execute();
       return $listForm;
     }
 
     public function getNumFonction($nomFon){
       $sql = "SELECT fon_num from fonction where fon_libelle='$nomFon'";
-      $req=$this->db->query($sql);
-
+      $req=$this->db->prepare($sql);
+      $req->execute();
       $num=$req->fetch(PDO::FETCH_OBJ);
       return $num;
     }

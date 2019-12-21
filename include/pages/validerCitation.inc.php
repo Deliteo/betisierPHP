@@ -3,6 +3,8 @@ $manager = new CitationManager($db); ?>
 <h1> Valider une citation </h1>
 
 <?php if(!isset($_GET['numcit'])&&!isset($_GET['numcitbis'])){ ?>
+
+<p> Cliquez sur le numéro de la citation pour choisir la citation à valider :</p>
   <table>
     <tr>
       <th>N° Citation</th>

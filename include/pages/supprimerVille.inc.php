@@ -58,15 +58,17 @@ echo "La ville a été supprimée";
 
   $listeVille=$managerVille->listeVille();
   ?>
+  <p>Choisissez la ville à supprimer : </p>
   	<form method="post" action="#">
   	<select name="ville"><?php
   	foreach ($listeVille as $donnees=>$listeVille) :?>
   				<option value="<?php echo $listeVille['ville'] ?>" ><?php echo $listeVille['ville'] ?></option>
   		<?php
-  	endforeach ?></select><br>
+  	endforeach ?>
+    </select>
+    <br>
   	<button type="submit" > Valider </button>
-  	</select>
-
+  	</form>
   	 <?php
  }
 

@@ -109,7 +109,13 @@ if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empt
 		}
 	}
 	else{
- 		if(!isset($_GET["nump"])){ ?>
+ 		if(!isset($_GET["nump"])){ 
+			 
+			$nombrePersonnes=$manager->getNombre()->nombrePersonne ;
+
+			echo "Actuellement ".$nombrePersonnes." personnes enregistrées";
+			?>
+			
 		<table>
 		<tr>
 			<th>Nom</th>
@@ -118,9 +124,7 @@ if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empt
 		</tr>
 		<?php
 		$listeNom=$manager->getList();
-		$nombrePersonnes=$manager->getNombre()->nombrePersonne ;
-
-		echo "Actuellement ".$nombrePersonnes." personnes enregistrées";
+		
 
 		foreach ($listeNom as $personne) {
 			?>
@@ -128,7 +132,7 @@ if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empt
 			<tr>
 				<td><?php echo $personne->getNomPer();?></td>
 				<td><?php echo $personne->getPrenomPer();?></td>
-				<td><a href="index.php?page=3&nump=<?php echo $personne->getNumPer();?>"</a> <?php echo $personne->getNumPer();?> </td>
+				<td><a href="index.php?page=3&nump=<?php echo $personne->getNumPer();?>"><img class="iconeModifier" src="image/modifier.png" alt="imgModifier" title="Noter"/></a> </td>
 			</tr>
 			<?php
 		}

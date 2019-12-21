@@ -1,7 +1,4 @@
-<?php
-
-class DepartementManager {
-	private $dbo;
+<?php class DepartementManager {
 
 		public function __construct($db){
 			$this->db = $db;
@@ -34,7 +31,6 @@ class DepartementManager {
 	public function supprimerDepartement($numDep){
 		$sql = "delete from departement where dep_num=$numDep";
 
-		print_r($sql);
 		$requete = $this->db->prepare($sql);
 		$requete->execute();
 	}
@@ -42,7 +38,7 @@ class DepartementManager {
   public function getPersonne($dep_num){
     $listePer = array();
 
-    $sql = "select per_num FROM Etudiant where dep_num = $dep_num";
+    $sql = "select per_num FROM Departement d join Etudiant e where d.dep_num=e.dep_num and dep_num = $dep_num";
 
     $requete = $this->db->prepare($sql);
     $requete->execute();
@@ -55,6 +51,24 @@ class DepartementManager {
       $listePer = NULL;
     }
     return $listePer;
+}
+
+public function getDepartement($numVille){
+	$listeDepartements = array();
+
+	$sql = "select dep_num FROM departement where vil_num = $numVille";
+
+	$requete = $this->db->prepare($sql);
+	$requete->execute();
+
+	while ($departement = $requete->fetch(PDO::FETCH_OBJ))
+			$listeDepartements[] = new Departement($departement);
+
+	$requete->closeCursor();
+	if(empty($listeDepartements)){
+		$listeDepartements = NULL;
+	}
+	return $listeDepartements;
 }
 
 

@@ -8,7 +8,8 @@
       $listeVilles=array();
 
       $sql = 'SELECT vil_num,vil_nom from ville order by vil_nom';
-      $req=$this->db->query($sql);
+      $req=$this->db->prepare($sql);
+      $req->execute();
 
       while ($ville = $req->fetch(PDO::FETCH_OBJ)){
         $listeVilles[]=new Ville ($ville);
@@ -21,7 +22,8 @@
     public function getNombre(){
 
       $sql = 'SELECT count(vil_nom) as nombreVilles from ville';
-      $req=$this->db->query($sql);
+      $req=$this->db->prepare($sql);
+      $req->execute();
 
       $nombreVilles=$req->fetch(PDO::FETCH_OBJ);
 
@@ -42,14 +44,16 @@
 
     public function listeVille(){
       $sql = "SELECT vil_nom as ville from ville";
-      $listeVille=$this->db->query($sql);
+      $listeVille=$this->db->prepare($sql);
+      $listeVille->execute();
 
       return $listeVille;
     }
 
     public function getNumVil($nom){
       $sql = "SELECT vil_num as num from ville where vil_nom='$nom'";
-      $req=$this->db->query($sql);
+      $req=$this->db->prepare($sql);
+      $req->execute();
 
       $num=$req->fetch(PDO::FETCH_OBJ);
       return $num;

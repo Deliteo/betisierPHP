@@ -22,7 +22,7 @@ if(isset($_POST['supprimer'])&&$_POST['supprimer']=="oui"){
 	}
 
 	$manager->supprimerPersonne($_SESSION['numPersonne']);
-	echo "la personne a été supprimée";
+	echo "La personne a été supprimée";
 
 }
 
@@ -31,16 +31,17 @@ $listeLogin=$manager->listePersonne();
 ?>
 
 
-
+	<p>Choisissez la personne à supprimer :</p>
 	<form method="post" action="#">
-	<select name="personne"><?php
+	<select id="suppPers" name="personne"><?php
 	foreach ($listeLogin as $donnees=>$listeLogin) :?>
 				<option value="<?php echo $listeLogin['log'] ?>" ><?php echo $listeLogin['log'] ?></option>
 		<?php
 	endforeach ?></select><br>
-	<button type="submit" > Valider </button>
+	
 	</select>
-
+	<button type="submit" > Valider </button>
+	</form>
 	 <?php
 
 }

@@ -54,7 +54,19 @@ public function supprimerVotePer($nump){
 }
 
 public function supprimerVoteCit($numc){
-  
+
+}
+
+public function getMoyenneVote($numc){
+  $sql = 'SELECT avg(vot_valeur) as moyVot FROM vote
+  WHERE cit_num=:citNum
+  GROUP BY cit_num';
+  $requete = $this->db->prepare($sql);
+  $requete->bindValue(':citNum',$numc);
+  $requete->execute();
+  $result=$requete->fetch();
+  $requete->closeCursor();
+  return $result['moyVot'];
 }
 
 }

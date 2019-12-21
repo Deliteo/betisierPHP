@@ -1,9 +1,9 @@
 
 <?php
 class Departement {
-	public $dep_num;
-	public $dep_nom;
-	public $vil_num;
+	private $dep_num;
+	private $dep_nom;
+	private $vil_num;
 
 
     public function __construct($valeurs = array()) {

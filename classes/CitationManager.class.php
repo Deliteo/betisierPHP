@@ -6,14 +6,15 @@
 
   public function getList(){
     $listeCitations = array();
-    $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date,avg(vot_valeur) as cit_note FROM citation c
+    $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date FROM citation c
     INNER JOIN personne p ON p.per_num=c.per_num
-    INNER JOIN vote v ON v.cit_num=c.cit_num
+    LEFT OUTER JOIN vote v ON v.cit_num=c.cit_num
     WHERE cit_valide=1 and cit_date_valide IS NOT NULL
     GROUP BY c.cit_num
     ORDER BY cit_date DESC
     LIMIT 2';
-    $req= $this->db->query($sql);
+    $req=$this->db->prepare($sql);
+    $req->execute();
     while ($citation = $req->fetch(PDO::FETCH_OBJ)){
 
       $listeCitations[]=new Citation($citation);
@@ -25,13 +26,15 @@
 
   public function getNombre(){
 
-    $sql = 'SELECT count(cit_num) as nombreCitation from Citation
-    WHERE cit_valide=1 and cit_date_valide IS NOT NULL';
-    $req=$this->db->query($sql);
+    $sql =$this->db->prepare('SELECT count(cit_num) as nombreCitation from Citation
+    WHERE cit_valide=1 and cit_date_valide IS NOT NULL');
+    $sql->execute();
 
-    $nombreCitation=$req->fetch(PDO::FETCH_OBJ);
+    $nombreCitation=$sql->fetch(PDO::FETCH_OBJ);
 
     return $nombreCitation;
+
+
   }
 
   public function getPermVote($pernum,$citnum){
@@ -91,16 +94,14 @@
   }
 
 
-  public function ajouterCitation($enseignant,$etudiant,$date,$citation){
+  public function ajouterCitation($citation){
     $requete = $this->db->prepare(
     'INSERT INTO citation(per_num, per_num_etu, cit_libelle, cit_date) VALUES (:per_num,:per_num_etu,:cit_libelle,:cit_date)');
 
-    $requete->bindValue(':per_num',$enseignant);
-    $requete->bindValue(':per_num_etu',$etudiant);
-    $requete->bindValue(':cit_libelle',$citation);
-    $requete->bindValue(':cit_date',$date);
-
-
+    $requete->bindValue(':per_num',$citation->getCitNomPers());
+    $requete->bindValue(':per_num_etu',$citation->getCitPerNumEtu());
+    $requete->bindValue(':cit_libelle',$citation->getCitLibelle());
+    $requete->bindValue(':cit_date',$citation->getCitDate());
 
     $retour=$requete->execute();
     return $retour;
@@ -265,8 +266,6 @@ public function supprimerVotePer($numc){
     $requete->closeCursor();
     return $retour;
   }
-
-
 
 }
 // test de commentaire
