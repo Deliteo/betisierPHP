@@ -4,6 +4,7 @@
       $this->db=$db;
     }
 
+    // fonction qui permet de noter une citation
     public function voterCitation($citNum,$perNum,$votValeur){
       $requete = $this->db->prepare(
         'INSERT INTO vote (cit_num,per_num,vot_valeur) VALUES (:cit_num,:per_num,:vot_valeur);');
@@ -16,6 +17,7 @@
 
     }
 
+    //fonction qui récupère le vote d'une personne
     public function getVotePer($nump){
       $listeVote = array();
 
@@ -33,6 +35,7 @@
       return $listeVote;
   }
 
+  
   public function getVoteCit($numc){
     $listeVote = array();
 

@@ -4,6 +4,7 @@
       $this->db=$db;
     }
 
+    // fonction qui retourne la liste des villes
     public function getList(){
       $listeVilles=array();
 
@@ -19,6 +20,7 @@
       $req->closeCursor();
     }
 
+    //fonction qui retourne le nombre de villes enregistrées
     public function getNombre(){
 
       $sql = 'SELECT count(vil_nom) as nombreVilles from ville';
@@ -30,6 +32,7 @@
       return $nombreVilles;
     }
 
+    // fonction qui ajoute une ville
     public function ajouterVille($ville){
       $requete = $this->db->prepare(
       'INSERT INTO Ville (vil_nom) VALUES (:vil_nom);');
@@ -50,6 +53,7 @@
       return $listeVille;
     }
 
+    // fonction qui retourne le numéro d'une ville
     public function getNumVil($nom){
       $sql = "SELECT vil_num as num from ville where vil_nom='$nom'";
       $req=$this->db->prepare($sql);
@@ -59,6 +63,7 @@
       return $num;
     }
 
+    //fonction qui supprime une ville
     public function supprimerVille($numv){
       $requete = $this->db->prepare(
         "DELETE from ville where vil_num='$numv';");
@@ -67,6 +72,7 @@
         return $retour;
     }
 
+    //fonction qui retourne la liste des départements d'une ville
     public function getDepartement($numVille){
       $listeDepartements = array();
 
@@ -83,17 +89,18 @@
         $listeDepartements = NULL;
       }
       return $listeDepartements;
-}
+    }
 
-public function modifierVille($nomV,$numV){
-  $requete = $this->db->prepare(
-  "UPDATE ville set vil_nom=:nom_vil where vil_num='$numV';");
+    // fonction qui modifie une ville
+    public function modifierVille($nomV,$numV){
+      $requete = $this->db->prepare(
+      "UPDATE ville set vil_nom=:nom_vil where vil_num='$numV';");
 
-  $requete->bindValue(':nom_vil',$nomV);
+      $requete->bindValue(':nom_vil',$nomV);
 
 
-  $retour=$requete->execute();
-  return $retour;
-}
+      $retour=$requete->execute();
+      return $retour;
+    }
   }
 ?>

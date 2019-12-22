@@ -4,6 +4,8 @@
     $this->db = $db;
   }
 
+
+  // fonction qui permet d'obtenir la liste des 2 citations validées
   public function getList(){
     $listeCitations = array();
     $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date FROM citation c
@@ -24,6 +26,7 @@
     $req->closeCursor();
   }
 
+  // fonction qui donne le nombre de citations existantes
   public function getNombre(){
 
     $sql =$this->db->prepare('SELECT count(cit_num) as nombreCitation from Citation
@@ -37,6 +40,7 @@
 
   }
 
+  // fonction qui retourne un booleen pour pouvoir voter une citation
   public function getPermVote($pernum,$citnum){
 
     $req=$this->db->prepare('SELECT cit_num as perm FROM vote WHERE per_num=:pernum AND cit_num=:citnum');
@@ -55,6 +59,7 @@
 
   }
 
+  // fonction qui retourne le contenu de la citation
   public function getLibelle($citnum){
     $req=$this->db->prepare('SELECT cit_libelle as libelle FROM citation WHERE cit_num=:citnum');
     $req->bindValue(':citnum',$citnum,PDO::PARAM_INT);
@@ -65,6 +70,7 @@
 
   }
 
+  // fonction qui retourne le nom/prenom de la citation à partir du numéro de citation
   public function getNomPers($citnum){
     $req=$this->db->prepare('SELECT concat(per_nom,per_prenom) as cit_nom_pers FROM citation c
     JOIN personne p ON p.per_num=c.per_num WHERE cit_num=:citnum');
@@ -75,7 +81,7 @@
     return $resultat->cit_nom_pers;
 
   }
-
+  // fonction qui retourne la liste des enseignants
   public function getListEnseignant(){
     $listeNom=array();
 
@@ -88,12 +94,11 @@
       $listeNom[]=new Personne ($nom);
     }
 
-    //print_r($listeNom);
     return $listeNom;
     $req->closeCursor();
   }
 
-
+  //fonction qui ajoute une citation
   public function ajouterCitation($citation){
     $requete = $this->db->prepare(
     'INSERT INTO citation(per_num, per_num_etu, cit_libelle, cit_date) VALUES (:per_num,:per_num_etu,:cit_libelle,:cit_date)');
@@ -108,6 +113,7 @@
 
   }
 
+  // fonction qui permet de vérifier mot par mot
   public function verifierMot($mot){
     $requete = $this->db->prepare(
     "SELECT mot_interdit from mot where mot_interdit=:mot");
@@ -118,6 +124,7 @@
     return $resultat;
   }
 
+  //fonction qui permet de vérifier si une phrase contient un mot interdit
   public function verifierPhrase($phrase){
     $requete = $this->db->prepare(
 
@@ -130,6 +137,7 @@
     return $resultat;
   }
 
+  // fonction qui supprime une citation d'un étudiant 
   public function supprimerCitationEtu($nump){
     $requete = $this->db->prepare(
       "DELETE FROM citation where per_num_etu='$nump';");
@@ -137,6 +145,7 @@
       return $retour;
   }
 
+  //fonction qui supprime une citation sur un salarié
   public function supprimerCitationSal($nump){
     $requete = $this->db->prepare(
       "DELETE FROM citation where per_num='$nump';");
@@ -144,6 +153,7 @@
       return $retour;
   }
 
+  // fonction qui retourne la liste des citations ajoutées par un étudiant
   public function getCitationEtu($nump){
     $listeCitation = array();
 
@@ -161,6 +171,7 @@
     return $listeCitation;
 }
 
+// fonction qui supprime un vote lié à une citation
 public function supprimerVoteCit($numc){
   $requete = $this->db->prepare(
     "DELETE FROM vote where cit_num='$numc';");
@@ -168,6 +179,7 @@ public function supprimerVoteCit($numc){
     return $retour;
 }
 
+// fonction qui supprime un vote lié à une personne
 public function supprimerVotePer($numc){
   $requete = $this->db->prepare(
     "DELETE FROM vote where per_num='$numc';");
@@ -175,6 +187,8 @@ public function supprimerVotePer($numc){
     return $retour;
 }
 
+  // fonction qui permet de rechercher une citation selon 3 critères
+  // la requete s'adapte aux champs remplis
   public function rechercherCitation($enseignant,$date,$note){
 
     if(!empty($enseignant)){
@@ -219,11 +233,7 @@ public function supprimerVotePer($numc){
     if(!empty($note)){
       $req->bindValue(':note',$note,PDO::PARAM_STR);
     }
-    /*
-    echo "<pre>";
-    print_r($req->debugDumpParams());
-    echo "/<pre>";
-    */
+
     $req->execute();
     while ($citation = $req->fetch(PDO::FETCH_OBJ)){
 
@@ -239,6 +249,7 @@ public function supprimerVotePer($numc){
     $req->closeCursor();
   }
 
+  //fonction qui retourne la liste des citations qui peuvent être validées
   public function getListeCitationNonValide(){
     $listeCitations = array();
     $sql = 'SELECT concat(per_nom,per_prenom) as cit_nom_pers,c.cit_num as cit_num,cit_libelle,cit_date FROM citation c
@@ -255,6 +266,7 @@ public function supprimerVotePer($numc){
     $req->closeCursor();
   }
 
+  //fonction qui permet de valider une citation
   public function validerCitation($cit){
     $date=date("Y-m-d");
     $sql='UPDATE citation SET cit_valide=1, cit_date_valide=:date WHERE cit_num=:citnum';
@@ -268,5 +280,4 @@ public function supprimerVotePer($numc){
   }
 
 }
-// test de commentaire
-// test de fetch
+

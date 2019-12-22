@@ -181,17 +181,9 @@
 
 
 			case 13:
-			if (!empty($_SESSION['num']))
-			{
+
 				include("pages/connexion.inc.php");
-			}
-			else
-			{
-				$page=0;
-				?>
-				<meta http-equiv="refresh" content="2;url=index.php"/>
-				<?php
-			}
+		
 			break;
 
 			case 14:

@@ -186,13 +186,13 @@ if(!empty($_POST["nom"])&&!empty($_POST["prenom"])&&!empty($_POST["tel"])&&!empt
 	<p> Téléphone :  <input type="text" id="tel" name="tel" value="<?php if(isset($_POST['tel'])){ echo $_POST['tel'];}else{ echo $personne_tel;}?>"> </p>
 	<p> Mail :  <input type="text" id="mail" name="mail" value="<?php if(isset($_POST['mail'])){ echo $_POST['mail'];}else{echo 	$personne_mail;}?>"> </p>
 	<p> Login :  <input type="text" id="login" name="login" value="<?php if(isset($_POST['login'])){ echo $_POST['login'];}else{echo $personne_login;}?>"> </p>
-	<p> Mot de passe :  <input type="text" id="motDePasse" name="motDePasse" value="<?php if(isset($_POST['motDePasse'])){ echo $_POST['motDePasse']; 	}?>"> </p>
+	<p> Mot de passe :  <input type="password" id="motDePasse" name="motDePasse" value="<?php if(isset($_POST['motDePasse'])){ echo $_POST['motDePasse']; 	}?>"> </p>
 	<form method="POST" name="cat">
-	categorie
-		<input type="radio" name="categorie" value="etudiant" <?php if($_SESSION["personne_etudiant"]){?> checked <?php } ?> > etudiant
-		<input type="radio" name="categorie" value="employe" <?php if(!$_SESSION["personne_etudiant"]){?> checked <?php } ?> > employe<br>
+	<p> Categorie : 
+		<input type="radio" name="categorie" value="etudiant" <?php if($_SESSION["personne_etudiant"]){?> checked <?php } ?> > Etudiant
+		<input type="radio" name="categorie" value="employe" <?php if(!$_SESSION["personne_etudiant"]){?> checked <?php } ?> > Employe<br>
 		<button type="submit" > Valider </button>
-
+		</p>
 	</form>
 
 

@@ -4,6 +4,7 @@
 			$this->db = $db;
 		}
 
+		// fonction qui retourne la liste des départements
 		public function getAllDepartement(){
             $listeDepartements = array();
 
@@ -19,7 +20,7 @@
             return $listeDepartements;
 		}
 
-
+	//fonction qui supprime les départements d'une ville
 	public function supprimerDepartementVille($numVille){
 		$sql = "delete from departement
 						WHERE vil_num = $numVille";
@@ -28,6 +29,7 @@
 		$requete->execute();
 	}
 
+	// fonction qui permet de supprimer un département
 	public function supprimerDepartement($numDep){
 		$sql = "delete from departement where dep_num=$numDep";
 
@@ -35,6 +37,7 @@
 		$requete->execute();
 	}
 
+	// fonction qui retourne la liste des étudiants d'un département
   public function getPersonne($dep_num){
     $listePer = array();
 
@@ -53,6 +56,7 @@
     return $listePer;
 }
 
+// fonction qui retourne la liste des départements d'une ville
 public function getDepartement($numVille){
 	$listeDepartements = array();
 
